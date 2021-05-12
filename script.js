@@ -6,7 +6,11 @@ const goods = [
   ];
   
   const renderGoodsItem = (title, price) => {
-    return `<div class="goods-item"><h3>${title}</h3><p>${price}</p></div>`;
+    return `<div class="goods-item">
+            <h3>${title}</h3>
+            <p>${price} руб</p>
+            <button class="goods-button" type="button">Добавить</button>
+            </div>`;
   };
   
   const renderGoodsList = (list) => {
