@@ -13,8 +13,6 @@ class GoodsItem {
             </div>`;
   };
 }
-
-
 class GoodsList {
   constructor() {
     this.goods = [];
@@ -34,11 +32,20 @@ class GoodsList {
       listHtml += goodItem.renderGoodsItem(); 
     });
     document.querySelector('.goods-list').innerHTML = listHtml;
+    document.body.insertAdjacentHTML( 'beforeend',
+    `<div class = 'sum'>Общая стоимость ${this.getPrice()} руб.</div>`);
+    
   }
-  }
+  getPrice() {
+    return this.goods.reduce((price, good) => {
+      return price + good.price;
+    },0);
+  } 
+}
   const list = new GoodsList();
   list.fetchGoods();
   list.renderGoodsList();
+ 
  
  
 
