@@ -1,28 +1,44 @@
-const goods = [
-    { title: 'Shirt', price: 150 },
-    { title: 'Socks', price: 50 },
-    { title: 'Jacket', price: 350 },
-    { title: 'Shoes', price: 250 },
-  ];
-  
-  const catalogBlock = document.querySelector('.goods-list');
 
-  const renderGoodsItem = (item) => {
+
+class GoodsItem {
+  constructor(title, price) {
+    this.title = title;
+    this.price = price;
+  }
+  renderGoodsItem = () => {
     return `<div class="goods-item">
-            <h3>${item.title}</h3>
-            <p>${item.price} руб</p>
+            <h3>${this.title}</h3>
+            <p>${this.price} руб</p>
             <button class="goods-button" type="button">Добавить</button>
             </div>`;
   };
-  //Заменила метод map на метод foreach, на мой взгляд это более проще для понимания.
-  //Уменьшила количество строчек кода. Так же благодаря этому ушли запятые. 
-  const renderGoodsList = (list) => { 
-    list.forEach(item => {
-      catalogBlock.insertAdjacentHTML('beforeend', renderGoodsItem(item)); 
-    });
+}
+
+
+class GoodsList {
+  constructor() {
+    this.goods = [];
   }
-  
-  renderGoodsList(goods);
+  fetchGoods() {
+    this.goods = [
+      { title: 'Shirt', price: 150 },
+      { title: 'Socks', price: 50 },
+      { title: 'Jacket', price: 350 },
+      { title: 'Shoes', price: 250 },
+    ];
+  }
+  renderGoodsList = () => {
+    let listHtml = ''; 
+    this.goods.forEach(good => {
+      const goodItem = new GoodsItem(good.title, good.price); 
+      listHtml += goodItem.renderGoodsItem(); 
+    });
+    document.querySelector('.goods-list').innerHTML = listHtml;
+  }
+  }
+  const list = new GoodsList();
+  list.fetchGoods();
+  list.renderGoodsList();
  
  
 
@@ -31,3 +47,7 @@ const goods = [
     //document.querySelector('.goods-list').innerHTML = goodsList;
   //}
   
+  //unit(){
+    //this.catalogBlock = document.querySelector('.goods-list');}
+
+     //this.catalogBlock.insertAdjacentHTML('beforeend', renderGoodsItem(good)); 
