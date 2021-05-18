@@ -13,6 +13,7 @@ class GoodsItem {
             </div>`;
   };
 }
+
 class GoodsList {
   constructor() {
     this.goods = [];
@@ -42,13 +43,34 @@ class GoodsList {
     },0);
   } 
 }
+
+class CartGood extends GoodsList {
+  constructor(...args) {
+    super(...args)
+  }
+  clearCart() {}
+  deleteGood() {}
+}
+class CartItem extends GoodsItem {
+  constructor(title, price, count) {
+    super(title, price);
+    this.count = count;    
+  }
+  addItem() {}
+  deleteItem() {}
+}
+  
+  const cartGood = new CartGood();
+  const cartItem = new CartItem();
   const list = new GoodsList();
   list.fetchGoods();
-  list.renderGoodsList();
+  list.renderGoodsList();;
  
  
  
 
+  
+  
   // const renderGoodsList = (list) => {
     //let goodsList = list.map(item => renderGoodsItem(item.title, item.price));
     //document.querySelector('.goods-list').innerHTML = goodsList;
