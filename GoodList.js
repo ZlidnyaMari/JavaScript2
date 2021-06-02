@@ -39,7 +39,7 @@ class GoodsItem {
         return `<div class="goods-item">
               <h3>${this.product_name}</h3>
               <p>${this.price} руб</p>
-              <button data-product = '${data}' id = 'add-btn-${this.id_product}'>Добавить</button>
+              <button class = 'goods-button' data-product = '${data}' id = 'add-btn-${this.id_product}'>Добавить</button>
               </div>`;
     }
   }
@@ -49,28 +49,36 @@ class GoodsItem {
     
     constructor() {
       this.goods = [];
+      this.filteredGoods = [];
     }
     fetchGoods(cb) {
         makeGETRequest(`${API_URL}/catalogData.json`, (goods) => {
             this.goods = JSON.parse(goods);
+            this.filteredGoods = JSON.parse(goods);
             cb();
+        
         })
     }
-      
+    filterGoods(value) {
+      const regexp = new RegExp(value, 'i');
+      this.filteredGoods = this.goods.filter(good => regexp.test(good.product_name));
+      this.renderGoodsList();
+    }
+  
     renderGoodsList = () => {
       let listHtml = ''; 
-      this.goods.forEach(good => {
+      this.filteredGoods.forEach(good => {
         const goodItem = new GoodsItem(good.product_name, good.price, good.id_product); 
         listHtml += goodItem.renderGoodsItem(); 
       });
       document.querySelector('.goods-list').innerHTML = listHtml;
-      this._cartGood.setAddListeners(this.goods);
+      this._cartGood.setAddListeners(this.filteredGoods);
       document.body.insertAdjacentHTML( 'beforeend',
       `<div class = 'sum'>Общая стоимость каталога ${this.getPrice()} руб.</div>`);
       
     }
     getPrice() {
-      return this.goods.reduce((price, good) => {
+      return this.filteredGoods.reduce((price, good) => {
         return price + good.price;
       },0);
     } 

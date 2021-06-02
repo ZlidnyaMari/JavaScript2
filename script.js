@@ -1,9 +1,14 @@
-
   const list = new GoodsList();
   list.fetchGoods (() => {
   list.renderGoodsList();
   });
- 
+  
+  const searchButton =  document.querySelector('.search-button')
+  const searchInput = document.querySelector('.goods-search')
+  searchButton.addEventListener('click', (e) => {
+   const value = searchInput.value
+   list.filterGoods(value)
+ });
  
  /* 
   Вопросы к дз №3. Что я делаю не так, у меня не отрисовывается корзина в браузере? Списала методы добавления в корзину товаров 
