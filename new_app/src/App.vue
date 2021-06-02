@@ -6,14 +6,7 @@
         <button class="cart-button" type="button" @click="toggleCart">Корзина</button>
     </header>
     <main>
-        <div class="goods-list">
-          <div v-for="item in filteredGoods" :key="item.id_product" class="goods-item">
-              <h3>{{item.product_name}}</h3>
-              <p>{{item.price}} руб</p>
-              <button class = 'goods-button'>Добавить</button>
-              </div>
-        </div>
-        
+        <GoodsList :goods = "filteredGoods" />
         <div v-show="isVisibleCart" class="cart">
             Корзина
         <div class="goods-cart"></div>
@@ -24,10 +17,13 @@
 </template>
 
 <script>
-
+import GoodsList from './components/GoodsList';
 const API_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses'
 
 export default {
+components: {
+    GoodsList,
+},
 data: () => ({
   goods: [],
   filteredGoods: [],
@@ -108,32 +104,6 @@ methods: {
 .cart-button:hover {
     background-color: #86e5fc; 
     color: white;
-}
-.goods-list {
-    display: flex;
-    justify-content: space-evenly;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    text-align: center;
-    
-}
-.goods-item {
-    border: solid black 2px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;  
-}
-.goods-button {
-    background-color: aliceblue;
-    border: none;
-    padding: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-top: 30px;
-}
-.goods-button:hover {
-    background-color: #86e5fc; 
-    color: white; 
 }
 .sum {
     font-size: 25px;
